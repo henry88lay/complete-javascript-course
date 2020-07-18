@@ -11,6 +11,7 @@ GAME RULES:
 
 // Declaring Our Variables
 let scores, roundScore, activePlayer;
+const diceHide = document.querySelector('.dice').style.display = 'none';
 
 // Defining Our Variables
 scores = [0,0];
@@ -19,8 +20,8 @@ activePlayer = 0;
 
 // document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
 
-document.querySelector('.dice').style.display = 'none';
 
+diceHide
 document.getElementById('score-0').textContent = '0';
 document.getElementById('score-1').textContent = '0';
 document.getElementById('current-0').textContent = '0';
@@ -31,7 +32,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
   // 1. Random Number
   let dice = Math.floor(Math.random() * 6) + 1;
   // 2. Display the result
-  let diceDOM = document.querySelector('.dice');
+  const diceDOM = document.querySelector('.dice');
   diceDOM.style.display = 'block';
   diceDOM.src = `dice-${dice}.png`
   // 3. Update the round score IF the rolled number NOT a 1
@@ -48,6 +49,6 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     document.querySelector('.player-0-panel').classList.toggle('active');
     document.querySelector('.player-1-panel').classList.toggle('active');
 
-    document.querySelector('.dice').style.display = 'none';
+    diceHide
   } 
 });
