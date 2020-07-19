@@ -15,17 +15,15 @@ let scores, roundScore, activePlayer;
   roundScore = 0;
   activePlayer = 0;
 
-const diceHide = document.querySelector('.dice').style.display = 'none';
-let current0DOM = document.getElementById('current-0');
-let current1DOM = document.getElementById('current-1');
+const hideDice = document.querySelector('.dice').style.display = 'none';
 
 // document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
 
-diceHide
+hideDice
 document.getElementById('score-0').textContent = '0';
 document.getElementById('score-1').textContent = '0';
-current0DOM.textContent = '0';
-current1DOM.textContent = '0';
+document.getElementById('current-0').textContent = '0';
+document.getElementById('current-1').textContent = '0';
 
 
 document.querySelector('.btn-roll').addEventListener('click', () => {
@@ -38,27 +36,34 @@ document.querySelector('.btn-roll').addEventListener('click', () => {
   // 3. Update the round score IF the rolled number NOT a 1
     if (dice !== 1) {
       roundScore += dice;
-      document.querySelector('#current-' + activePlayer).textContent = roundScore;
+      document.querySelector(`#current-${activePlayer}`).textContent = scores[active];
     } else {
-      activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-      roundScore = 0;
-
-      current0DOM.textContent = '0';
-      current1DOM.textContent = '0';
-
-      document.querySelector('.player-0-panel').classList.toggle('active');
-      document.querySelector('.player-1-panel').classList.toggle('active');
-
-      diceHide
+      nextPlayer();
     }
   }
 );
 
 document.querySelector('.btn-hold').addEventListener('click', () => {
   // Add CURRENT Score to Global Score
-
+  scores[activePlayer] += roundScore;
   // Update the UI
-
+  document.querySelector(`#score-${activePlayer}`).textContent = scores[activePlayer]
   // Winning Condition
 
-})
+  // Next Player
+  nextPlayer();
+
+});
+
+let nextPlayer = () => {
+  activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+  roundScore = 0;
+
+  document.getElementById('current-0').textContent = '0';
+  document.getElementById('current-1').textContent = '0';
+
+  document.querySelector('.player-0-panel').classList.toggle('active');
+  document.querySelector('.player-1-panel').classList.toggle('active');
+
+  hideDice
+};
