@@ -10,16 +10,15 @@ GAME RULES:
 */
 
 // Declaring Our Variables
-let scores, roundScore, activePlayer;
+let scores, roundScore, activePlayer, gamePlaying = true;
 
 init();
 
 const hideDice = document.querySelector('.dice').style.display = 'none'; 
 
-// document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
-
 document.querySelector('.btn-roll').addEventListener('click', () => {
-  // 1. Random Number
+  if(gamePlaying) {
+    // 1. Random Number
     let dice = Math.floor(Math.random() * 6) + 1;
   // 2. Display the result
     const diceDOM = document.querySelector('.dice');
@@ -33,25 +32,26 @@ document.querySelector('.btn-roll').addEventListener('click', () => {
       nextPlayer();
     }
   }
-);
+});
 
 document.querySelector('.btn-hold').addEventListener('click', () => {
-  // Add CURRENT Score to Global Score
-  scores[activePlayer] += roundScore;
-  // Update the UI
-  document.querySelector(`#score-${activePlayer}`).textContent = scores[activePlayer]
-  // Winning Condition
-  if (scores[activePlayer] >= 100) {
-    document.querySelector(`#name-${activePlayer}`).textContent = 'Winner!';
-    hideDice;
-    document.querySelector(`.player-${activePlayer}-panel`).classList.add('winner');
-    document.querySelector(`.player-${activePlayer}-panel`).classList.remove('active');
-  } else {
-    nextPlayer();
+  if(gamePlaying) {
+    // Add CURRENT Score to Global Score
+    scores[activePlayer] += roundScore;
+    // Update the UI
+    document.querySelector(`#score-${activePlayer}`).textContent = scores[activePlayer]
+    // Winning Condition
+    if (scores[activePlayer] >= 100) {
+      document.querySelector(`#name-${activePlayer}`).textContent = 'Winner!';
+      hideDice;
+      document.querySelector(`.player-${activePlayer}-panel`).classList.add('winner');
+      document.querySelector(`.player-${activePlayer}-panel`).classList.remove('active');
+      gamePlaying = false;
+    } else {
+      // Next Player
+      nextPlayer();
+    }
   }
-  // Next Player
-  nextPlayer();
-
 });
 
 let nextPlayer = () => {
@@ -80,4 +80,9 @@ function init() {
   document.getElementById('current-1').textContent = '0';
   document.getElementById('name-0').textContent = 'Player 1';
   document.getElementById('name-1').textContent = 'Player 2';
+  document.querySelector('.player-0-panel').classList.remove('winner');
+  document.querySelector('.player-1-panel').classList.remove('winner');
+  document.querySelector('.player-0-panel').classList.remove('active');
+  document.querySelector('.player-1-panel').classList.remove('active');
+  document.querySelector('.player-0-panel').classList.add('active');
 };
