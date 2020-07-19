@@ -15,7 +15,7 @@ let scores, roundScore, activePlayer;
   roundScore = 0;
   activePlayer = 0;
 
-const hideDice = document.querySelector('.dice').style.display = 'none';
+const hideDice = document.querySelector('.dice').style.display = 'none'; 
 
 // document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
 
@@ -49,7 +49,14 @@ document.querySelector('.btn-hold').addEventListener('click', () => {
   // Update the UI
   document.querySelector(`#score-${activePlayer}`).textContent = scores[activePlayer]
   // Winning Condition
-
+  if (scores[activePlayer] >= 100) {
+    document.querySelector(`#name-${activePlayer}`).textContent = 'Winner!';
+    hideDice;
+    document.querySelector(`.player-${activePlayer}-panel`).classList.add('winner');
+    document.querySelector(`.player-${activePlayer}-panel`).classList.remove('active');
+  } else {
+    nextPlayer();
+  }
   // Next Player
   nextPlayer();
 
